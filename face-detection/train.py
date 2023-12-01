@@ -18,15 +18,27 @@ from sklearn.feature_selection import SelectKBest
 from IPython.display import display
 import seaborn as sns
 
+from joblib import dump, load
+
 #Read dataset
 #silence future warnings
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+
+"""
+Optimization:
+
+    Hyperparameter tuning
+
+    Feature selection
+
+"""
+
 def preprocess(df : pd.DataFrame):
     # Pre-processing
 
-    df = df.drop(["subDirectory_filePath", "valence", "expression"], axis=1)
+    df = df.drop(["subDirectory_filePath", "arousal", "expression"], axis=1)
     
     corr = df.corr()["valence"].sort_values(ascending=False)
     print(corr)
@@ -104,7 +116,7 @@ if __name__ == "__main__":
         BayesianRidge()
     ]
     dataset_df = pd.read_csv("DiffusionFER/au_data.csv")
-    X_list, y  = preprocess(dataset_df, 'arousal')
+    X_list, y  = preprocess(dataset_df)
     
     train_val_test_sets = train_val_test(X_list, y)
 
@@ -112,6 +124,9 @@ if __name__ == "__main__":
 
     val_y = train_val_test_sets[0][1][1]
     train_y = train_val_test_sets[0][0][1]
+    test_y = train_val_test_sets[0][2][1]
+    test_X = train_val_test_sets[0][2][0]
+
     res.append({
         "model": "Naive Regressor",
         "feature_select": 0,
@@ -122,3 +137,7 @@ if __name__ == "__main__":
 
     res_df = pd.DataFrame(res)
     res_df.to_csv("train.csv")
+
+    best_model = models[4]
+    print(mean_absolute_error(test_y, best_model.predict(test_X)))
+    dump(best_model, "valence_model.joblib")
