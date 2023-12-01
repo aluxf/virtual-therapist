@@ -1,1 +1,3 @@
 face-detection/train.csv
+face-detection/valence_model.joblib
+**/*.DS_STORE
