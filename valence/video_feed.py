@@ -6,6 +6,7 @@ from multiprocessing import Process, Manager
 from time import sleep
 import numpy as np
 import time
+import os
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -58,6 +59,7 @@ def get_valence(frame, detector, model):
 
 
 def valence_feed(shared_list):
+
     """
     Feed the shared list with valence values obtained from video frames.
     FPS is limited to 2 frames per second because of the model inference time.
@@ -71,8 +73,9 @@ def valence_feed(shared_list):
     """
     detector = Detector(device="mps")
     cam = cv2.VideoCapture(0)
+    __dir__ = os.path.dirname(os.path.abspath(__file__))
 
-    model = load('valence_model.joblib')
+    model = load(__dir__ + '/valence_model.joblib')
     while True:
         t_start = time.time()
         ret, frame = cam.read()
@@ -104,15 +107,3 @@ def consumer(shared_list):
             break
         sleep(1)
 
-if __name__ == "__main__":
-
-    with Manager() as manager:
-        shared_list = manager.list()  # shared list
-        prod = Process(target=valence_feed, args=(shared_list,))
-        cons = Process(target=consumer, args=(shared_list,))
-
-        prod.start()
-        cons.start()
-
-        prod.join()
-        cons.join()
