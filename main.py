@@ -4,7 +4,6 @@ from interaction import therapist
 
 if __name__ == "__main__":
 
-    answers = ["1", "2", "3", "4", "5"]
     questions = [
         "How would you rate your overall well-being as a student?",
         "On a scale of 1 to 5, how would you rate your stress levels on average?",
@@ -17,13 +16,18 @@ if __name__ == "__main__":
         #"How would you rate your school-life balance?",
     ]
 
+    question_set = [
+        ("How is your overall well-being as a student?", ["horrible", "bad", "okay", "good", "excellent"]),
+        ("On a scale of 1 to 5, how would you rate your stress levels on average?", ["1", "2", "3", "4", "5"]),
+    ]
+
     with Manager() as manager:
         valence_frames = manager.list()  # shared list
         prod = Process(target=video_feed.valence_feed, args=(valence_frames,))
         prod.start()
 
         total_score = 0
-        for q in questions:
+        for q,answers in question_set:
             score = therapist.ask_question(valence_frames, q, answers)
             total_score += score
 
