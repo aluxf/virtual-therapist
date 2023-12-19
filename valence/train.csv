@@ -1,0 +1,21 @@
+,model,feature_select,train_mse,eval_mse,max_error
+0,DecisionTreeRegressor(),0,6.159329627717428e-18,0.22918287937743193,1.4
+1,SVR(),0,0.12556301042327322,0.17083665656014782,1.0931321583722051
+2,LinearRegression(),0,0.17499095397993794,0.17937296869809144,1.2102461187056086
+3,"XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, device=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             gamma=None, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=None, max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=None, max_leaves=None,
+             min_child_weight=None, missing=nan, monotone_constraints=None,
+             multi_strategy=None, n_estimators=None, n_jobs=None,
+             num_parallel_tree=None, random_state=None, ...)",0,0.0019498346757856645,0.1806532216675087,1.2347748219966888
+4,GradientBoostingRegressor(),0,0.11429938125302783,0.17049574717175714,1.2717058825847078
+5,SGDRegressor(),0,0.19726569240077751,0.2000986784720598,1.0939509666360894
+6,KernelRidge(),0,0.17596891661513228,0.17894460984404081,1.1980495292739524
+7,ElasticNet(),0,0.26530900110244854,0.284270460477054,0.8589543937708566
+8,BayesianRidge(),0,0.17524822791547442,0.17926800927339287,1.2119567285367245
+9,Naive Regressor,0,0.27548638132295716,0.2595105672969967,1.0
