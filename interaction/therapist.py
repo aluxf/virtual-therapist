@@ -30,7 +30,7 @@ def predict_answer(user_input, answers):
 def valence_str(valence_nr):
     if valence_nr < -0.1:
         return "negative"
-    if valence_nr > 0.1:
+    if valence_nr > 0:
         return "positive"
     return "neutral"
 
@@ -79,8 +79,13 @@ def ask_question(shared_list, question, answers):
         bsay(question)
         answer = listen()
         valence = get_valence(shared_list)
+        print(shared_list)
+        print("Valence: ", valence)
+        print(answer)
         answer_idx, probability = predict_answer(answer, answers)
-        if probability < 0.5:
+        print(answer_idx)
+        print(probability)
+        if probability < 0.4:
             bsay("I did not get that, please give me a valid answer")
             continue
         
