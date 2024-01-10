@@ -3,6 +3,7 @@ from valence import video_feed
 from interaction import therapist
 
 if __name__ == "__main__":
+    # List of questions to ask the user
     questions = [
         "How would you rate your overall well-being as a student?",
         "On a scale of 1 to 5, how would you rate your stress levels on average?",
@@ -15,6 +16,7 @@ if __name__ == "__main__":
         "How would you rate your school-life balance?",
     ]
 
+    # Set of questions and corresponding answer options
     question_set = [
         (
             "How is your overall well-being as a student?",
@@ -55,20 +57,20 @@ if __name__ == "__main__":
     ]
 
     with Manager() as manager:
-        valence_frames = manager.list()  # shared list
+        valence_frames = manager.list()  # shared list for storing video frames
         prod = Process(target=video_feed.valence_feed, args=(valence_frames,))
         prod.start()
 
-        name = therapist.introduction()
+        name = therapist.introduction()  # Get the user's name
 
         total_score = 0
         for q, answers in question_set:
-            score = therapist.ask_question(valence_frames, q, answers)
+            score = therapist.ask_question(valence_frames, q, answers)  # Ask each question and get the user's score
             total_score += score
 
-        avg_score = total_score / len(questions)
+        avg_score = total_score / len(questions)  # Calculate the average score
         print("Your average score is: ", avg_score)
 
-        therapist.recommendation(int(avg_score), name)
+        therapist.recommendation(int(avg_score), name)  # Provide a recommendation based on the average score
 
-        prod.join()
+        prod.join()  # Wait for the video feed process to finish

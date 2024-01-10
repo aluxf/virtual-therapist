@@ -12,10 +12,23 @@ import warnings
 warnings.filterwarnings("ignore")
 
 def display_camera_feed():
+    """
+    Displays the camera feed in a window and detects facial action units (AUs) in real-time.
+
+    This function opens the default camera and continuously reads frames from it. It uses a face detector to detect faces
+    in each frame, and then detects facial landmarks and action units (AUs) for each detected face. The detected AUs are
+    printed to the console. The frames are displayed in a window until the user presses 'q' to exit.
+
+    Parameters:
+        None
+
+    Returns:
+        None
+    """
     # Create a detector object
     detector = Detector(device="mps")
 
-    # Open the default camera with widht and height as 640x480
+    # Open the default camera with width and height as 640x480
     cap = cv2.VideoCapture(0)
     cap.set(3, 640)
     cap.set(4, 480)
@@ -42,6 +55,17 @@ def display_camera_feed():
     cv2.destroyAllWindows()
 
 def get_valence(frame, detector, model):
+    """
+    Calculates the valence score for a given frame using a face detector and a valence prediction model.
+
+    Args:
+        frame (numpy.ndarray): The input frame.
+        detector: The face detector object.
+        model: The valence prediction model.
+
+    Returns:
+        float: The valence score for the frame.
+    """
     try:
         faces = detector.detect_faces(frame)
         if not faces[0]:
@@ -59,7 +83,6 @@ def get_valence(frame, detector, model):
 
 
 def valence_feed(shared_list):
-
     """
     Feed the shared list with valence values obtained from video frames.
     FPS is limited to 2 frames per second because of the model inference time.
@@ -69,7 +92,6 @@ def valence_feed(shared_list):
 
     Returns:
         int: Returns 0 if there was an error reading the frame from the camera.
-
     """
     detector = Detector(device="mps")
     cam = cv2.VideoCapture(0)
@@ -98,6 +120,15 @@ def valence_feed(shared_list):
     cam.release()
 
 def consumer(shared_list):
+    """
+    Consumes values from a shared list and calculates the average valence.
+
+    Args:
+        shared_list (list): A list containing valence values.
+
+    Returns:
+        None
+    """
     while True:
         if shared_list:
             print(shared_list)
