@@ -36,8 +36,20 @@ Optimization:
 """
 
 def preprocess(df : pd.DataFrame):
-    # Pre-processing
-
+    """
+    Preprocesses the given DataFrame by performing the following steps:
+    1. Drops the columns "subDirectory_filePath", "arousal", and "expression".
+    2. Calculates the correlation of each feature with the "valence" column and prints the results.
+    3. Separates the features (X) and the target variable (y).
+    4. Prints the unique classes in the target variable.
+    5. Prints the class distribution of the target variable.
+    
+    Args:
+        df (pd.DataFrame): The input DataFrame containing the data.
+        
+    Returns:
+        list: A list containing the preprocessed features (X) and the target variable (y).
+    """
     df = df.drop(["subDirectory_filePath", "arousal", "expression"], axis=1)
     
     corr = df.corr()["valence"].sort_values(ascending=False)
@@ -54,6 +66,16 @@ def preprocess(df : pd.DataFrame):
     return [X], y
 
 def train_val_test(X_list, y):
+    """
+    Splits the data into training, validation, and test sets.
+
+    Args:
+        X_list (list): A list of input data arrays.
+        y (array-like): The target variable array.
+
+    Returns:
+        list: A list containing tuples of the form (X_train, y_train), (X_val, y_val), (X_test, y_test).
+    """
     train_val_test = []
 
     for x in X_list:
@@ -78,14 +100,51 @@ def train_val_test(X_list, y):
     return train_val_test
 
 def train_eval(models, train_val_test):
+    """
+    Train and evaluate multiple models using the given training, validation, and test data.
+
+    Parameters:
+    models (list): A list of models to train and evaluate.
+    train_val_test (list): A list of tuples containing the training, validation, and test data.
+
+    Returns:
+    list: A list of dictionaries containing the evaluation results for each model.
+
+    """
     # Training
     results = []
 
     def train_and_eval(model, X_train, y_train, X_test, y_test):
+        """
+        Train and evaluate a single model.
+
+        Parameters:
+        model: The model to train and evaluate.
+        X_train: The training data features.
+        y_train: The training data labels.
+        X_test: The test data features.
+        y_test: The test data labels.
+
+        Returns:
+        float: The evaluation metric (mean absolute error) for the model on the test data.
+
+        """
         model.fit(X_train, y_train)
         return eval(model, X_test, y_test)
 
     def eval(model, X_eval, y_eval):
+        """
+        Evaluate a trained model on the given data.
+
+        Parameters:
+        model: The trained model to evaluate.
+        X_eval: The evaluation data features.
+        y_eval: The evaluation data labels.
+
+        Returns:
+        float: The evaluation metric (mean absolute error) for the model on the evaluation data.
+
+        """
         predicted_val = model.predict(X_eval)
         return mean_absolute_error(y_eval, predicted_val)
     

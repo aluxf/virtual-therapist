@@ -30,6 +30,15 @@ def predict_answer(user_input, answers):
 
 
 def valence_str(valence_nr):
+    """
+    Converts a numerical valence value to a string representation.
+
+    Args:
+        valence_nr (float): The numerical valence value.
+
+    Returns:
+        str: The string representation of the valence value. Can be "negative", "positive", or "neutral".
+    """
     if valence_nr < -0.1:
         return "negative"
     if valence_nr > 0:
@@ -38,6 +47,16 @@ def valence_str(valence_nr):
 
 
 def get_valence(shared_list):
+    """
+    Calculate the valence based on the average value of a shared list.
+
+    Parameters:
+    shared_list (list): A list of values representing the shared data.
+
+    Returns:
+    str: The valence category based on the average value of the shared list.
+         Possible categories are 'positive', 'negative', or 'neutral'.
+    """
     try:
         avg_valence = np.mean(shared_list)
         valence = valence_str(avg_valence)
@@ -47,17 +66,40 @@ def get_valence(shared_list):
     return valence
 
 
-# Say with blocking (blocking say, bsay for short)
 def bsay(line):
+    """
+    Function to make the Furhat robot say a given line of text.
+
+    Args:
+        line (str): The text to be spoken by the Furhat robot.
+
+    Returns:
+        None
+    """
     furhat.say(text=line, blocking=True)
 
 
 # answers = [1, 2, 3, 4, 5]
 def score(answer_idx):
+    """
+    Calculates the score based on the given answer index.
+
+    Parameters:
+    answer_idx (int): The index of the answer.
+
+    Returns:
+    int: The calculated score.
+    """
     return answer_idx + 1
 
 
 def confirm_answer():
+    """
+    Asks the user to confirm their answer.
+    
+    Returns:
+    bool: True if the answer is confirmed, False otherwise.
+    """
     bsay("Are you sure about your answer?")
     while True:
         result = furhat.listen()
@@ -72,6 +114,18 @@ def confirm_answer():
 
 
 def listen(tries=3):
+    """
+    Listens for user input using the furhat.listen() function.
+
+    Args:
+        tries (int): The number of attempts to listen for user input. Default is 3.
+
+    Returns:
+        str: The user's input message, converted to lowercase.
+
+    Raises:
+        Exception: If the microphone is not working properly after the specified number of attempts.
+    """
     for _ in range(tries):
         result = furhat.listen()
         answer = result.message.lower()
@@ -83,6 +137,17 @@ def listen(tries=3):
 
 
 def ask_question(shared_list, question, answers):
+    """
+    Asks a question to the user and processes the answer based on valence and predicted answer index.
+
+    Args:
+        shared_list (list): A shared list of information.
+        question (str): The question to ask the user.
+        answers (list): A list of possible answers.
+
+    Returns:
+        int: The score corresponding to the answer index.
+    """
     while True:
         bsay(question)
         answer = listen()
@@ -119,6 +184,12 @@ def ask_question(shared_list, question, answers):
 
 
 def introduction():
+    """
+    This function introduces the virtual therapist and prompts the user to state their name.
+    
+    Returns:
+        str: The name provided by the user.
+    """
     while True:
         bsay(
             "Hi! I'm a virtual therapist and I specialize in students' well-being. I'm happy to see you here today! Please state your name."
@@ -130,6 +201,16 @@ def introduction():
 
 
 def recommendation(score, name):
+    """
+    Provides a recommendation based on the given score.
+
+    Parameters:
+    score (float): The average score calculated based on the user's answers.
+    name (str): The name of the user.
+
+    Returns:
+    None
+    """
     bsay("Thank you for answering all of my questions" + name)
     bsay("I have now calculated your average score which is" + str(score))
 
