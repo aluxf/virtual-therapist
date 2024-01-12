@@ -18,42 +18,73 @@ if __name__ == "__main__":
 
     # Set of questions and corresponding answer options
     question_set = [
+        # General Well-being
         (
-            "How is your overall well-being as a student?",
-            ["horrible", "bad", "okay", "good", "excellent"],
+            "How is your overall well-being as a student?", 
+            ["horrible", "bad", "okay", "good", "great"]
+        ),
+        
+        # Mental Health
+        (
+            "Have you experienced any positive or negative changes in your mental health while being a student?", 
+            ["worse", "negative", "same", "positive", "positive"]
+        ),
+        
+        # Stress and Coping
+        (
+            "On a scale from 1 to 5, how would you rate your stress levels on average?", 
+            ["5", "4", "3", "2", "1"]
         ),
         (
-            "On a scale from 1 to 5, how would you rate your stress levels on average?",
-            ["5", "4", "3", "2", "1"],
+            "How often do you feel overwhelmed by academic responsibilities and deadlines?", 
+            ["always", "often", "sometimes", "rarely", "never"]
         ),
         (
-            "Have you experienced any significant changes in your mental health while being a student?",
-            ["many", "few", "neutral", "some", "none"],
+            "How well do you sleep on a regular basis?", 
+            ["horrible", "bad", "okay", "good", "great"]
+        ),
+        
+        # Physical and Emotional Well-being
+        (
+            "How often do you engage in physical activity each week?", 
+            ["never", "once", "few", "often", "daily"]
+        ),
+        
+        # Academic Experience
+        (
+            "On a scale from 1 to 5, how satisfied are you with your academic achievements and learning progress?", 
+            ["1", "2", "3", "4", "5"]
+        ),
+        
+        # Time Management
+        (
+            "How effective do you feel your time management skills are in balancing academic and personal life?", 
+            ["horrible", "bad", "okay", "good", "great"]
+        ),
+        
+        # Social and Institutional Support
+        (
+            "How do you feel that your mental health is supported and prioritized by your educational institution?", 
+            ["horrible", "bad", "okay", "good", "great"]
         ),
         (
-            "How do you feel that your mental health is supported and prioritized by your educational institution?",
-            ["horrible", "bad", "neutral", "good", "excellent"],
+            "How is the support from your family and close ones regarding your education?", 
+            ["horrible", "bad", "okay", "good", "great"]
         ),
         (
-            "How often do you feel overwhelmed by academic responsibilities and deadlines?",
-            ["always", "often", "neutral", "sometimes", "never"],
+            "How is your participation in social activities or clubs outside of your academic responsibilities?", 
+            ["horrible", "bad", "okay", "good", "great"]
+        ),
+        
+        # Future Outlook
+        (
+            "On a scale from 1 to 5, how would you rate your school-life balance?", 
+            ["5", "4", "3", "2", "1"]
         ),
         (
-            "Have you experienced any symptoms of anxiety, such as excessive worry or restlessness?",
-            ["many", "few", "neutral", "some", "none"],
-        ),
-        (
-            "How much sleep are you getting on a regular basis? On a scale from 1 to 5.",
-            ["1", "2", "3", "4", "5"],
-        ),
-        (
-            "Do you engage in regular physical activity and maintain a healthy lifestyle?",
-            ["never", "sometimes", "neutral", "regularly", "frequently"],
-        ),
-        (
-            "On a scale from 1 to 5, how would you rate your school-life balance?",
-            ["1", "2", "3", "4", "5"],
-        ),
+            "How do you feel about your career prospects or further education after your current studies?", 
+            ["horrible", "bad", "okay", "good", "great"]
+        )
     ]
 
     with Manager() as manager:
