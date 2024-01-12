@@ -99,11 +99,11 @@ def ask_question(shared_list, question, answers):
 
         # Negative answer
         if answer_idx < 2 and valence != "positive":
-            bsay("Okey, sorry to hear that.")
+            bsay("Okay, sorry to hear that.")
 
         # Neutral answer
         elif answer_idx == 2 and valence == "neutral":
-            bsay("Okey!")
+            bsay("Okay!")
 
         # Positive answer
         elif answer_idx > 2 and valence != "negative":
